@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Edit Page</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	</head>
+
+	<body>
+
+		<header>
+			
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+			  <div class="container-fluid">
+			    <h1 class="navbar-brand">My Blog</h1>
+
+			    <div class="collapse navbar-collapse" id="navbarNav">
+			    	
+			    	<ul class="navbar-nav">
+			    	
+				    	<li class="nav-item">
+				    		<a class="nav-link" 
+				    			th:href="@{/home}">Home</a>
+				    	</li>
+
+				    	<li class="nav-item">
+				    		<a class="nav-link" 
+				    			th:href="@{/add}">New Article</a>
+				    	</li>
+
+				    </ul>
+
+			    </div>
+
+			  </div>
+
+			</nav>
+
+		</header>
+
+		<div class="container">
+		
+			<h1>Edit selected article</h1>
+
+			<form th:method="patch" 
+				th:action="@{/edit/{id}(id=${article.getId()})}"
+				th:object="${article}">
+				
+				<label for="title">Title</label>
+				<input class="form-control" th:field="*{title}" 
+					type="text" name="title">
+				<p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"/>
+				<br>
+
+				<label for="author">Author</label>
+				<input class="form-control" th:field="*{author}" 
+					type="text" name="author">
+				<p th:if="${#fields.hasErrors('author')}" th:errors="*{author}"/>
+				<br>
+
+				<label for="content">Content</label>
+				<textarea wrap="hard" rows="10" 
+					class="form-control" 
+					th:field="*{content}" 
+					type="text" name="content"/>
+				<p th:if="${#fields.hasErrors('content')}" th:errors="*{content}"/>
+				<br>
+
+				<button class="btn btn-success">Update</button>
+			</form>
+			<br>
+
+
+			<h2>Edit image</h2>
+
+			<form th:method="patch" 
+				th:action="@{/editImage/{id}(id=${article.getId()})}"
+				th:object="${article}">
+				
+				<label for="image">Image</label>
+				<input class="form-control" 
+					th:field="*{image}" 
+					type="file" name="image">
+				<p th:if="${#fields.hasErrors('image')}" th:errors="*{image}"/>
+				<br>
+
+				<button class="btn btn-success">Update</button>
+			</form>
+			<br>
+			
+
+			<h2>Upload new image</h2>
+
+			<form th:method="post" 
+				th:action="@{/uploadImage}"
+				enctype="multipart/form-data">
+				
+				<label for="image">New Image</label>
+				<input class="form-control"
+					type="file" name="image">
+				<!-- <p th:if="${#fields.hasErrors('image')}" th:errors="*{image}"/> -->
+				<br>
+
+				<button class="btn btn-success">Upload</button>
+			</form>
+			<br>
+			
+			<form th:method="delete" th:object="${article}"
+				th:action="@{/delete/{id}(id=${article.getId()})}">
+				<button class="btn btn-danger">Delete article</button>
+			</form>
+			<br>
+
+			<a class="btn btn-primary" th:href="@{/home}">Back to home</a>
+			
+			<br>
+		</div>
+
+	</body>
+</html>

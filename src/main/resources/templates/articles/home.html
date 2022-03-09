@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Home Page</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	</head>
+
+	<body>
+
+		<header>
+			
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+			  <div class="container-fluid">
+			    <h1 class="navbar-brand">My Blog</h1>
+
+			    <div class="collapse navbar-collapse" id="navbarNav">
+			    	
+			    	<ul class="navbar-nav">
+			    	
+				    	<li class="nav-item">
+				    		<a class="nav-link" 
+				    			th:href="@{/home}">Home</a>
+				    	</li>
+
+				    	<li class="nav-item">
+				    		<a class="nav-link" 
+				    			th:href="@{/add}">New Article</a>
+				    	</li>
+
+				    </ul>
+
+			    </div>
+
+			  </div>
+
+			</nav>
+
+		</header>
+
+		<div class="container">
+			
+			<h1>All articles</h1>
+
+			<div th:each="article : ${articles}">
+				<h2>
+					<a class="link-dark" th:href="@{/article/{id}(id=${article.getId()})}" 
+						th:text=${article.getTitle()}/>
+				</h2>
+				<p th:text=${article.getContent().substring(0,1000)+"..."}></p>
+				<div>
+					<a th:href="@{/article/{id}(id=${article.getId()})}">
+						<img class="img-fluid img-thumbnail" 
+						style="max-width:60%"
+						th:src="@{${'/blog/images/' + article.getImage()}}">
+					</a>
+				</div>
+				
+				<br>
+			</div>
+
+			<br>
+
+		</div>
+
+	</body>
+</html>
